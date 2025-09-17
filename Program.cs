@@ -11,6 +11,9 @@ namespace Assignment4._3._1
         static double unitPrice;
         static double surcharge;
         static double netBill;
+        static double maxTier1 = 199*Constants.upto199;
+        static double maxTier2 = maxTier1 + (200*Constants.from200to399);
+        static double maxTier3 = maxTier2 + (200*Constants.from400to599);
 
         Constants constants = new Constants();
         static void Main(string[] args)
@@ -32,6 +35,7 @@ namespace Assignment4._3._1
 
         public static void CalculateElectricityBill()
         {
+            /*
             switch(unitConsumed)
             {
                 case double uc when (uc < 200):
@@ -54,8 +58,31 @@ namespace Assignment4._3._1
                     Console.WriteLine($"Invalid Unit: {unitConsumed}");
                     break;
             }
+            */
+            switch (unitConsumed)
+            {
+                case double uc when (uc >= 600):
+                    unitPrice = maxTier3 + ((unitConsumed - 599) * Constants.above600);
+                    chargePerUnit = Constants.above600;
+                    break;
+                case double uc when (uc >= 400 && uc < 600):
+                    unitPrice = maxTier2 + ((unitConsumed - 399) * Constants.from400to599);
+                    chargePerUnit = Constants.from400to599;
+                    break;
+                case double uc when (uc >= 200 && uc < 400):
+                    unitPrice = maxTier1 + ((unitConsumed - 199) * Constants.from200to399);
+                    chargePerUnit = Constants.from200to399;
+                    break;
+                case double uc when (uc < 200):
+                    unitPrice = unitConsumed * Constants.upto199;
+                    chargePerUnit = Constants.upto199;
+                    break;
+                default:
+                    Console.WriteLine($"Invalid Unit: {unitConsumed}");
+                    break;
+            }
 
-            switch(unitPrice)
+            switch (unitPrice)
             {
                 case < 401:
                     surcharge = 0;
